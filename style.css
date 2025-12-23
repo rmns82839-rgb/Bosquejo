@@ -77,9 +77,71 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
     textarea:focus { padding: 110px 15px 20px 15px; }
 }
 
+/* --- MEJORA DE IMPRESIÓN SOLICITADA --- */
 @media print {
-    .no-print, .btn, .navbar, .accordion-button::after, #controles-lectura { display: none !important; }
+    /* Ocultar elementos innecesarios */
+    .no-print, .btn, .navbar, .accordion-button::after, #controles-lectura, 
+    #selector_bosquejo, .navbar-toggler, .dropdown, label.small { 
+        display: none !important; 
+    }
+
+    body { background-color: white !important; }
+    
+    /* Mostrar todo el contenido de los acordeones */
     .accordion-collapse { display: block !important; visibility: visible !important; }
-    textarea { position: static !important; width: 100% !important; height: auto !important; border: 1px solid #eee !important; }
-    .input-titulo-punto { border: none !important; color: black !important; }
+    .accordion-item { 
+        border: none !important; 
+        border-bottom: 1px solid #dee2e6 !important; /* Línea divisoria entre puntos */
+        margin-bottom: 1.5rem !important;
+        page-break-inside: avoid; /* Intenta no romper un punto a la mitad de página */
+    }
+
+    /* Título Principal (Sermón) */
+    #tema { 
+        color: #004085 !important; 
+        font-size: 2.2rem !important;
+        border-bottom: 3px solid #004085 !important;
+        text-align: center !important;
+        margin-bottom: 2rem !important;
+    }
+
+    /* Títulos de los Puntos (Subtítulos) */
+    .input-titulo-punto { 
+        border: none !important; 
+        color: #0d6efd !important; 
+        font-size: 1.5rem !important;
+        font-weight: bold !important;
+        display: block !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Sub-etiquetas (Introducción, Notas, etc) */
+    h5, h6, .text-primary, .text-info, .text-danger, .text-success, .text-warning {
+        font-weight: bold !important;
+        text-transform: uppercase !important;
+        font-size: 0.9rem !important;
+        margin-top: 10px !important;
+        border-left: 4px solid #dee2e6;
+        padding-left: 10px;
+    }
+
+    /* Configuración de Textareas para que salga todo el texto */
+    textarea { 
+        position: static !important; 
+        width: 100% !important; 
+        height: auto !important; 
+        border: none !important; 
+        overflow: hidden !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
+        color: #333 !important;
+        background: transparent !important;
+    }
+
+    /* Distincion de color para Versículos y Notas en papel */
+    [data-tipo="VERSÍCULOS"] { color: #198754 !important; }
+    [data-tipo="ILUSTRACIÓN"] { color: #856404 !important; font-style: italic; }
+
+    /* Ajuste de márgenes de página */
+    @page { margin: 2cm; }
 }
