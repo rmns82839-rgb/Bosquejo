@@ -1,0 +1,85 @@
+body { padding-bottom: 80px; font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; }
+textarea { font-size: 1.1rem; line-height: 1.6; border-radius: 5px; transition: font-size 0.2s ease; }
+
+/* MODO LECTURA PANTALLA COMPLETA */
+textarea:focus {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999;
+    padding: 100px 30px 40px 30px;
+    border: none !important;
+    border-radius: 0;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+#controles-lectura {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background: #1a1d20;
+    padding: 12px;
+    z-index: 10000;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 4px solid #0d6efd;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+#titulo-lectura-actual {
+    color: #ffc107;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+body:has(textarea:focus) #controles-lectura { display: flex; }
+
+#controles-lectura button {
+    background: #343a40;
+    color: white;
+    border: 1px solid #495057;
+    padding: 6px 18px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+#controles-lectura .btn-cerrar { background: #dc3545; border-color: #dc3545; }
+
+/* TÍTULOS DE PUNTOS REFINADOS */
+.input-titulo-punto {
+    border: none;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: bold;
+    color: #0d6efd;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+    padding: 2px 10px;
+    background: transparent;
+    transition: border-color 0.3s;
+}
+
+.input-titulo-punto:focus {
+    outline: none;
+    border-bottom-color: #0d6efd;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 576px) {
+    .input-titulo-punto { font-size: 0.9rem; max-width: 180px; }
+    .accordion-button { padding: 0.5rem; }
+    textarea:focus { padding: 110px 15px 20px 15px; }
+}
+
+@media print {
+    .no-print, .btn, .navbar, .accordion-button::after, #controles-lectura { display: none !important; }
+    .accordion-collapse { display: block !important; visibility: visible !important; }
+    textarea { position: static !important; width: 100% !important; height: auto !important; border: 1px solid #eee !important; }
+    .input-titulo-punto { border: none !important; color: black !important; }
+}
