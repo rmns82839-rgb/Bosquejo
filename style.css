@@ -1,3 +1,4 @@
+
 body { padding-bottom: 80px; font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; }
 textarea { font-size: 1.1rem; line-height: 1.6; border-radius: 5px; transition: font-size 0.2s ease; }
 
@@ -132,20 +133,24 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         display: block !important;
     }
 
-    /* 6. Subtítulos visibles y a lo ancho */
+    /* 6. Subtítulos visibles con COLORES DISTINTIVOS */
     h5, h6, .text-primary, .text-info, .text-danger, .text-success, .text-warning, label {
         display: block !important;
         font-weight: bold !important;
         text-transform: uppercase !important;
         font-size: 0.9rem !important;
-        color: #333 !important;
         margin-top: 15px !important;
         margin-bottom: 5px !important;
-        border-bottom: 1px solid #ddd !important;
         width: 100% !important;
     }
 
-    /* 7. Contenido Textareas completo */
+    /* Definición de colores para subtítulos (Líneas divisorias con color) */
+    .text-success, label[for*="versos"] { color: #198754 !important; border-bottom: 1px solid #198754 !important; }
+    .text-primary, label[for*="cuerpo"] { color: #004085 !important; border-bottom: 1px solid #004085 !important; }
+    .text-warning, label[for*="notas"] { color: #856404 !important; border-bottom: 1px solid #856404 !important; }
+    .text-danger, label[for*="introduccion"], label[for*="conclusion"] { color: #a52834 !important; border-bottom: 1px solid #a52834 !important; }
+
+    /* 7. Contenido Textareas completo con COLORES DISTINTIVOS */
     textarea { 
         position: static !important; 
         width: 100% !important; 
@@ -153,14 +158,18 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         border: none !important; 
         font-size: 12pt !important;
         line-height: 1.6 !important;
-        color: #000 !important;
         background: transparent !important;
         margin-bottom: 20px !important;
         display: block !important;
     }
 
+    /* Asignación de colores a los párrafos según su contenido */
+    textarea[id*="versos"] { color: #198754 !important; font-style: italic !important; }
+    textarea[id*="cuerpo"] { color: #004085 !important; }
+    textarea[id*="notas"] { color: #856404 !important; }
+    #introduccion, #conclusion, textarea.text-danger { color: #a52834 !important; }
+
     /* 8. NUMERACIÓN DE PÁGINAS */
-    /* Este bloque añade "Página X" al final de cada hoja impresa */
     @page {
         margin: 2cm;
         @bottom-right {
@@ -170,7 +179,6 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         }
     }
 
-    /* Fallback para navegadores que no soportan @bottom-right */
     body::after {
         content: "— Bosquejo de Predicación —";
         display: block;
@@ -184,5 +192,4 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         page-break-inside: avoid;
         margin-bottom: 2rem !important;
     }
-}
-
+    }
