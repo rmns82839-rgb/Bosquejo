@@ -77,55 +77,63 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
     textarea:focus { padding: 110px 15px 20px 15px; }
 }
 
-/* --- MEJORA DE IMPRESIÓN SOLICITADA --- */
+/* --- MEJORA DE IMPRESIÓN CORREGIDA (SIN CONTENEDORES) --- */
 @media print {
-    /* Ocultar elementos innecesarios */
+    /* 1. Ocultar interfaz innecesaria */
     .no-print, .btn, .navbar, .accordion-button::after, #controles-lectura, 
-    #selector_bosquejo, .navbar-toggler, .dropdown, label.small { 
+    #selector_bosquejo, .navbar-toggler, .dropdown, label.small, .badge { 
         display: none !important; 
     }
 
     body { background-color: white !important; }
-    
-    /* Mostrar todo el contenido de los acordeones */
-    .accordion-collapse { display: block !important; visibility: visible !important; }
-    .accordion-item { 
-        border: none !important; 
-        border-bottom: 1px solid #dee2e6 !important; /* Línea divisoria entre puntos */
-        margin-bottom: 1.5rem !important;
-        page-break-inside: avoid; /* Intenta no romper un punto a la mitad de página */
+
+    /* 2. ELIMINAR RECUADROS Y CONTENEDORES */
+    .container, .card, .card-body, .accordion-item, .accordion-body, .accordion-collapse {
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
     }
 
-    /* Título Principal (Sermón) */
+    /* 3. Título Principal (Sermón) */
     #tema { 
-        color: #004085 !important; 
+        color: #000 !important; 
         font-size: 2.2rem !important;
-        border-bottom: 3px solid #004085 !important;
+        border: none !important;
+        border-bottom: 2px solid #000 !important; 
         text-align: center !important;
         margin-bottom: 2rem !important;
     }
 
-    /* Títulos de los Puntos (Subtítulos) */
+    /* 4. Títulos de los Puntos (Subtítulos principales) */
     .input-titulo-punto { 
         border: none !important; 
         color: #0d6efd !important; 
-        font-size: 1.5rem !important;
+        font-size: 1.6rem !important;
         font-weight: bold !important;
         display: block !important;
+        margin-top: 1.5rem !important;
         margin-bottom: 0.5rem !important;
+        padding: 0 !important;
     }
 
-    /* Sub-etiquetas (Introducción, Notas, etc) */
-    h5, h6, .text-primary, .text-info, .text-danger, .text-success, .text-warning {
+    /* 5. Sub-etiquetas (Introducción, Versículo clave, Notas, etc) */
+    /* Estas quedan visibles para dar estructura al texto */
+    h5, h6, .text-primary, .text-info, .text-danger, .text-success, .text-warning, label {
+        display: block !important;
         font-weight: bold !important;
         text-transform: uppercase !important;
-        font-size: 0.9rem !important;
-        margin-top: 10px !important;
-        border-left: 4px solid #dee2e6;
-        padding-left: 10px;
+        font-size: 0.85rem !important;
+        margin-top: 12px !important;
+        margin-bottom: 4px !important;
+        color: #555 !important;
+        border: none !important;
+        padding-left: 0 !important;
     }
 
-    /* Configuración de Textareas para que salga todo el texto */
+    /* 6. Configuración de Textareas (Solo el texto) */
     textarea { 
         position: static !important; 
         width: 100% !important; 
@@ -134,14 +142,30 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         overflow: hidden !important;
         font-size: 11pt !important;
         line-height: 1.5 !important;
-        color: #333 !important;
+        color: #000 !important;
         background: transparent !important;
+        padding: 0 !important;
+        margin-bottom: 15px !important;
     }
 
-    /* Distincion de color para Versículos y Notas en papel */
-    [data-tipo="VERSÍCULOS"] { color: #198754 !important; }
-    [data-tipo="ILUSTRACIÓN"] { color: #856404 !important; font-style: italic; }
+    /* Distincion sutil para Versículos y Notas */
+    [data-tipo="VERSÍCULOS"], #p1_versos, #p2_versos { 
+        color: #198754 !important; 
+        font-style: italic !important;
+    }
+    
+    [data-tipo="ILUSTRACIÓN"], #p1_notas, #p2_notas { 
+        color: #856404 !important; 
+    }
 
-    /* Ajuste de márgenes de página */
-    @page { margin: 2cm; }
+    /* Línea sutil de separación física entre puntos al imprimir */
+    .accordion-item {
+        border-bottom: 1px solid #eee !important;
+        margin-bottom: 1rem !important;
+        padding-bottom: 1rem !important;
+        page-break-inside: avoid;
+    }
+
+    @page { margin: 1.5cm; }
 }
+
