@@ -1,4 +1,3 @@
-
 body { padding-bottom: 80px; font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; }
 textarea { font-size: 1.1rem; line-height: 1.6; border-radius: 5px; transition: font-size 0.2s ease; }
 
@@ -78,7 +77,7 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
     textarea:focus { padding: 110px 15px 20px 15px; }
 }
 
-/* --- CONFIGURACIÓN DE IMPRESIÓN / PDF --- */
+/* --- CONFIGURACIÓN DE IMPRESIÓN / PDF CON COLORES Y NUEVAS SECCIONES --- */
 @media print {
     /* 1. Ocultar interfaz */
     .no-print, .btn, .navbar, .accordion-button::after, #controles-lectura, 
@@ -91,7 +90,7 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         background-color: white !important; 
         padding: 0 !important; 
         margin: 0 !important;
-        counter-reset: page; /* Inicializa el contador de páginas */
+        counter-reset: page;
     }
     
     .container, .container-fluid {
@@ -118,7 +117,7 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         border-bottom: 3px solid #000 !important; 
         text-align: center !important;
         width: 100% !important;
-        margin-bottom: 2rem !important;
+        margin-bottom: 1.5rem !important;
     }
 
     /* 5. Títulos de los Puntos */
@@ -133,7 +132,7 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         display: block !important;
     }
 
-    /* 6. Subtítulos visibles con COLORES DISTINTIVOS */
+    /* 6. Subtítulos visibles con COLORES DISTINTIVOS Y LÍNEAS */
     h5, h6, .text-primary, .text-info, .text-danger, .text-success, .text-warning, label {
         display: block !important;
         font-weight: bold !important;
@@ -144,11 +143,15 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         width: 100% !important;
     }
 
-    /* Definición de colores para subtítulos (Líneas divisorias con color) */
+    /* Definición de colores por sección */
     .text-success, label[for*="versos"] { color: #198754 !important; border-bottom: 1px solid #198754 !important; }
     .text-primary, label[for*="cuerpo"] { color: #004085 !important; border-bottom: 1px solid #004085 !important; }
     .text-warning, label[for*="notas"] { color: #856404 !important; border-bottom: 1px solid #856404 !important; }
     .text-danger, label[for*="introduccion"], label[for*="conclusion"] { color: #a52834 !important; border-bottom: 1px solid #a52834 !important; }
+    
+    /* Nuevas Secciones: Propósito (Púrpura) y Objetivo (Cian Oscuro) */
+    label[for*="proposito"], .text-purple { color: #6f42c1 !important; border-bottom: 1px solid #6f42c1 !important; }
+    label[for*="objetivo"], .text-info { color: #087990 !important; border-bottom: 1px solid #087990 !important; }
 
     /* 7. Contenido Textareas completo con COLORES DISTINTIVOS */
     textarea { 
@@ -163,10 +166,11 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         display: block !important;
     }
 
-    /* Asignación de colores a los párrafos según su contenido */
     textarea[id*="versos"] { color: #198754 !important; font-style: italic !important; }
     textarea[id*="cuerpo"] { color: #004085 !important; }
     textarea[id*="notas"] { color: #856404 !important; }
+    textarea[id*="proposito"] { color: #6f42c1 !important; }
+    textarea[id*="objetivo"] { color: #087990 !important; }
     #introduccion, #conclusion, textarea.text-danger { color: #a52834 !important; }
 
     /* 8. NUMERACIÓN DE PÁGINAS */
@@ -192,4 +196,4 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         page-break-inside: avoid;
         margin-bottom: 2rem !important;
     }
-    }
+}
