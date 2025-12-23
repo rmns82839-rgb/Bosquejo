@@ -77,18 +77,31 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
     textarea:focus { padding: 110px 15px 20px 15px; }
 }
 
-/* --- MEJORA DE IMPRESIÓN CORREGIDA (SIN CONTENEDORES) --- */
+/* --- CONFIGURACIÓN DE IMPRESIÓN / PDF --- */
 @media print {
-    /* 1. Ocultar interfaz innecesaria */
+    /* 1. Ocultar interfaz */
     .no-print, .btn, .navbar, .accordion-button::after, #controles-lectura, 
-    #selector_bosquejo, .navbar-toggler, .dropdown, label.small, .badge { 
+    #selector_bosquejo, .navbar-toggler, .dropdown, .badge { 
         display: none !important; 
     }
 
-    body { background-color: white !important; }
+    /* 2. Ancho completo y reset de márgenes */
+    body { 
+        background-color: white !important; 
+        padding: 0 !important; 
+        margin: 0 !important;
+        counter-reset: page; /* Inicializa el contador de páginas */
+    }
+    
+    .container, .container-fluid {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 
-    /* 2. ELIMINAR RECUADROS Y CONTENEDORES */
-    .container, .card, .card-body, .accordion-item, .accordion-body, .accordion-collapse {
+    /* 3. Quitar todos los recuadros/cajas */
+    .card, .card-body, .accordion-item, .accordion-body, .accordion-collapse {
         border: none !important;
         box-shadow: none !important;
         background-color: transparent !important;
@@ -97,75 +110,79 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         display: block !important;
     }
 
-    /* 3. Título Principal (Sermón) */
+    /* 4. Título Principal */
     #tema { 
         color: #000 !important; 
-        font-size: 2.2rem !important;
-        border: none !important;
-        border-bottom: 2px solid #000 !important; 
+        font-size: 2.5rem !important;
+        border-bottom: 3px solid #000 !important; 
         text-align: center !important;
+        width: 100% !important;
         margin-bottom: 2rem !important;
     }
 
-    /* 4. Títulos de los Puntos (Subtítulos principales) */
+    /* 5. Títulos de los Puntos */
     .input-titulo-punto { 
         border: none !important; 
         color: #0d6efd !important; 
-        font-size: 1.6rem !important;
+        font-size: 1.8rem !important;
         font-weight: bold !important;
-        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin-top: 1.5rem !important;
-        margin-bottom: 0.5rem !important;
-        padding: 0 !important;
+        display: block !important;
     }
 
-    /* 5. Sub-etiquetas (Introducción, Versículo clave, Notas, etc) */
-    /* Estas quedan visibles para dar estructura al texto */
+    /* 6. Subtítulos visibles y a lo ancho */
     h5, h6, .text-primary, .text-info, .text-danger, .text-success, .text-warning, label {
         display: block !important;
         font-weight: bold !important;
         text-transform: uppercase !important;
-        font-size: 0.85rem !important;
-        margin-top: 12px !important;
-        margin-bottom: 4px !important;
-        color: #555 !important;
-        border: none !important;
-        padding-left: 0 !important;
+        font-size: 0.9rem !important;
+        color: #333 !important;
+        margin-top: 15px !important;
+        margin-bottom: 5px !important;
+        border-bottom: 1px solid #ddd !important;
+        width: 100% !important;
     }
 
-    /* 6. Configuración de Textareas (Solo el texto) */
+    /* 7. Contenido Textareas completo */
     textarea { 
         position: static !important; 
         width: 100% !important; 
         height: auto !important; 
         border: none !important; 
-        overflow: hidden !important;
-        font-size: 11pt !important;
-        line-height: 1.5 !important;
+        font-size: 12pt !important;
+        line-height: 1.6 !important;
         color: #000 !important;
         background: transparent !important;
-        padding: 0 !important;
-        margin-bottom: 15px !important;
+        margin-bottom: 20px !important;
+        display: block !important;
     }
 
-    /* Distincion sutil para Versículos y Notas */
-    [data-tipo="VERSÍCULOS"], #p1_versos, #p2_versos { 
-        color: #198754 !important; 
-        font-style: italic !important;
-    }
-    
-    [data-tipo="ILUSTRACIÓN"], #p1_notas, #p2_notas { 
-        color: #856404 !important; 
+    /* 8. NUMERACIÓN DE PÁGINAS */
+    /* Este bloque añade "Página X" al final de cada hoja impresa */
+    @page {
+        margin: 2cm;
+        @bottom-right {
+            content: "Página " counter(page);
+            font-family: sans-serif;
+            font-size: 10pt;
+        }
     }
 
-    /* Línea sutil de separación física entre puntos al imprimir */
+    /* Fallback para navegadores que no soportan @bottom-right */
+    body::after {
+        content: "— Bosquejo de Predicación —";
+        display: block;
+        text-align: center;
+        font-size: 9pt;
+        color: #aaa;
+        margin-top: 50px;
+    }
+
     .accordion-item {
-        border-bottom: 1px solid #eee !important;
-        margin-bottom: 1rem !important;
-        padding-bottom: 1rem !important;
         page-break-inside: avoid;
+        margin-bottom: 2rem !important;
     }
-
-    @page { margin: 1.5cm; }
 }
 
