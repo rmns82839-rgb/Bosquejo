@@ -24,7 +24,7 @@ function cargarDatos() {
             el.value = localStorage.getItem(`b${bosquejoActual}_${id}`) || "";
             el.oninput = () => localStorage.setItem(`b${bosquejoActual}_${id}`, el.value);
             el.onfocus = () => {
-                const titulo = el.getAttribute('data-titulo') || "SECCIÓN";
+                const titulo = el.getAttribute('data-titulo') || "CONCLUSIÓN";
                 document.getElementById('titulo-lectura-actual').innerText = titulo;
                 el.style.fontSize = fontSizeActual + "px";
             };
