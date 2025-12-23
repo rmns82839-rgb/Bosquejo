@@ -79,7 +79,7 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
 
 /* --- CONFIGURACIÓN DE IMPRESIÓN / PDF --- */
 @media print {
-    /* 1. Ocultar interfaz */
+    /* 1. Ocultar interfaz (excepto el bloque configMensaje si le quitaste no-print) */
     .no-print, .btn, .navbar, .accordion-button::after, #controles-lectura, 
     #selector_bosquejo, .navbar-toggler, .dropdown, .badge { 
         display: none !important; 
@@ -91,6 +91,21 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         padding: 0 !important; 
         margin: 0 !important;
         counter-reset: page; /* Inicializa el contador de páginas */
+    }
+
+    /* MEJORA: MARCA DE AGUA (logo.jpg) */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 450px; height: 450px;
+        background-image: url('logo.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        opacity: 0.08; /* Muy suave */
+        z-index: -1;
     }
     
     .container, .container-fluid {
@@ -110,8 +125,20 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         display: block !important;
     }
 
-    /* Forzar que se vea la sección aunque esté colapsada en la web */
-    .collapse:not(.show) { display: block !important; }
+    /* MEJORA: TARJETA DE CITA, PROPÓSITO Y OBJETIVO */
+    #configMensaje {
+        display: block !important;
+        border: 2px solid #6f42c1 !important; /* Borde Púrpura */
+        border-radius: 12px !important;
+        padding: 15px !important;
+        margin-bottom: 25px !important;
+        page-break-inside: avoid;
+    }
+
+    /* Forzar que el texto dentro de la tarjeta sea púrpura */
+    #configMensaje label, #configMensaje input, #configMensaje textarea {
+        color: #6f42c1 !important;
+    }
 
     /* 4. Título Principal */
     #tema { 
@@ -151,15 +178,15 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
     .text-primary, label[for*="cuerpo"] { color: #004085 !important; border-bottom: 1px solid #004085 !important; }
     .text-warning, label[for*="notas"] { color: #856404 !important; border-bottom: 1px solid #856404 !important; }
     .text-danger, label[for*="introduccion"], label[for*="conclusion"] { color: #a52834 !important; border-bottom: 1px solid #a52834 !important; }
-
-    /* Mejora para Propósito y Objetivo (Color Púrpura) */
-    label[for*="proposito"], label[for*="objetivo"], label[for*="base"], label[for*="tipo"] { 
+    
+    /* MEJORA: Púrpura para labels de Propósito y Objetivo */
+    label[for*="proposito"], label[for*="objetivo"], label[for*="cita"] { 
         color: #6f42c1 !important; 
         border-bottom: 1px solid #6f42c1 !important; 
     }
 
     /* 7. Contenido Textareas e Inputs completo con COLORES DISTINTIVOS */
-    textarea, input[type="text"]:not(.input-titulo-punto) { 
+    textarea, input { 
         position: static !important; 
         width: 100% !important; 
         height: auto !important; 
@@ -169,7 +196,6 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
         background: transparent !important;
         margin-bottom: 20px !important;
         display: block !important;
-        color: #000 !important;
     }
 
     /* Asignación de colores a los párrafos según su contenido */
@@ -177,9 +203,8 @@ body:has(textarea:focus) #controles-lectura { display: flex; }
     textarea[id*="cuerpo"] { color: #004085 !important; }
     textarea[id*="notas"] { color: #856404 !important; }
     
-    /* Párrafos de Propósito y Objetivo en Púrpura */
-    textarea[id*="proposito"], textarea[id*="objetivo"], 
-    input[id*="base"], input[id*="tipo"] { color: #6f42c1 !important; }
+    /* MEJORA: Colores para los textos de Propósito y Objetivo */
+    [id*="proposito"], [id*="objetivo"], #cita { color: #6f42c1 !important; font-weight: bold !important; }
 
     #introduccion, #conclusion, textarea.text-danger { color: #a52834 !important; }
 
