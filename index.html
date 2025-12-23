@@ -6,6 +6,43 @@
     <title>Bosquejo Bíblico Pro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .footer-bosquejo {
+            margin-top: 50px;
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+        .logo-footer {
+            max-width: 120px;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+        #seccionGlosarioImpresion {
+            page-break-inside: avoid;
+        }
+        /* Área para pegar el glosario con colores mejorada */
+        #glosarioEditable {
+            min-height: 150px;
+            border: 2px dashed #ccc;
+            padding: 15px;
+            background-color: #fdfdfd;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        #glosarioEditable:focus {
+            border-color: #0dcaf0;
+            background-color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+        }
+        @media print {
+            .no-print { display: none !important; }
+            #glosarioEditable { border: none !important; padding: 0 !important; background: transparent !important; }
+            .container { max-width: 100% !important; width: 100% !important; padding: 0 !important; }
+            .shadow { box-shadow: none !important; }
+        }
+    </style>
 </head>
 <body class="bg-light">
 
@@ -19,6 +56,7 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a href="versiculos.html" class="nav-link">Memorizar</a></li>
                 <li class="nav-item"><a href="notas.html" class="nav-link">Notas</a></li>
+                <li class="nav-item"><a href="glosario.html" class="nav-link">Glosario</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle bg-success rounded px-3 text-white ms-lg-2" href="#" id="bibliaDropdown" role="button" data-bs-toggle="dropdown">
                         📚 Biblia de Estudio
@@ -27,8 +65,6 @@
                         <li><a class="dropdown-item" href="https://biblehub.com/interlinear/" target="_blank">🌐 Interlineal Hebreo/Griego (Bible Hub)</a></li>
                         <li><a class="dropdown-item" href="https://www.blueletterbible.org/" target="_blank">🔍 Comentarios Avanzados (Blue Letter)</a></li>
                         <li><a class="dropdown-item" href="https://www.biblegateway.com/passage/?search=Gen+1&version=RVR1960" target="_blank">📖 Comparar Versiones</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item small text-muted" href="#">Herramientas de Exégesis</a></li>
                     </ul>
                 </li>
             </ul>
@@ -40,7 +76,7 @@
 <div class="container mb-5">
     <div class="row mb-4 no-print align-items-end g-2">
         <div class="col-12 col-md-4">
-            <label class="fw-bold small text-primary uppercase">Mes de Predicación:</label>
+            <label class="fw-bold small text-primary">Mes de Predicación:</label>
             <select id="selector_bosquejo" class="form-select border-primary fw-bold" onchange="cambiarBosquejo(this.value)">
                 <option value="1">Enero</option><option value="2">Febrero</option><option value="3">Marzo</option>
                 <option value="4">Abril</option><option value="5">Mayo</option><option value="6">Junio</option>
@@ -73,7 +109,7 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="fw-bold">Texto Bíblico Base:</label>
-                                <input type="text" id="cita" class="form-control border-primary" placeholder="Ej: Hebreos 11:1">
+                                <input type="text" id="cita" class="form-control border-primary">
                             </div>
                             <div class="col-md-6">
                                 <label class="fw-bold">Tipo de Mensaje:</label>
@@ -87,7 +123,7 @@
                             </div>
                             <div class="col-12">
                                 <label class="fw-bold">Propósito Específico:</label>
-                                <textarea id="proposito" class="form-control" rows="2" data-titulo="PROPÓSITO DEL MENSAJE"></textarea>
+                                <textarea id="proposito" class="form-control" rows="2"></textarea>
                             </div>
                         </div>
                     </div>
@@ -98,33 +134,58 @@
         <div class="card mb-4 border-start border-info border-4 shadow-sm">
             <div class="card-body">
                 <h6 class="fw-bold text-info">INTRODUCCIÓN</h6>
-                <textarea id="introduccion" class="form-control" rows="3" data-titulo="INTRODUCCIÓN"></textarea>
+                <textarea id="introduccion" class="form-control" rows="3"></textarea>
             </div>
         </div>
 
         <h5 class="fw-bold text-primary mb-3">DESARROLLO (CUERPO)</h5>
         <div class="accordion" id="acordeonPuntos"></div>
-
+        
         <div class="card mt-4 border-start border-danger border-4 shadow-sm">
             <div class="card-body">
                 <h6 class="fw-bold text-danger">CONCLUSIÓN Y LLAMADO</h6>
-                <textarea id="resumen_final" class="form-control mb-2" rows="2" data-titulo="RESUMEN DE PUNTOS"></textarea>
-                <textarea id="conclusion" class="form-control" rows="3" data-titulo="LLAMADO Y CIERRE"></textarea>
+                <textarea id="resumen_final" class="form-control mb-2" rows="2" placeholder="Resumen de puntos..."></textarea>
+                <textarea id="conclusion" class="form-control" rows="3" placeholder="Llamado final..."></textarea>
             </div>
         </div>
-    </div>
-</div>
 
-<div id="controles-lectura">
+        <div class="card mt-4 shadow-sm border-0 border-top border-info border-3" id="seccionGlosarioImpresion">
+            <div class="card-body bg-light">
+                <h6 class="fw-bold text-info mb-2">📖 GLOSARIO DE TÉRMINOS CLAVE</h6>
+                <div id="glosarioEditable" 
+                     contenteditable="true" 
+                     class="bg-white p-3 border"
+                     onfocus="limpiarAyudaGlosario(this)">
+                    <span class="text-muted">Haz clic aquí y pega (Ctrl+V) el glosario copiado...</span>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer-bosquejo">
+            <img src="logo.jpg" alt="Logo" class="logo-footer" onerror="this.style.display='none'">
+            <div class="text-muted small">
+                <p class="mb-0 fw-bold">"Procura con diligencia presentarte ante Dios aprobado..."</p>
+                <p class="mb-0">2 Timoteo 2:15</p>
+            </div>
+        </footer>
+    </div> </div> <div id="controles-lectura">
     <div id="titulo-lectura-actual">LEYENDO SECCIÓN</div>
     <div class="d-flex gap-2">
-        <button type="button" onmousedown="event.preventDefault()" onclick="cambiarTamanoLetra(-2)">A-</button>
-        <button type="button" onmousedown="event.preventDefault()" onclick="cambiarTamanoLetra(2)">A+</button>
-        <button type="button" class="btn-cerrar" onclick="cerrarLectura()">CERRAR ✕</button>
+        <button type="button" onclick="cambiarTamanoLetra(-2)">A-</button>
+        <button type="button" onclick="cambiarTamanoLetra(2)">A+</button>
+        <button type="button" class="btn-cerrar" onclick="cerrarLectura()">✕</button>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
+<script>
+    // Función específica para limpiar el glosario al tocarlo
+    function limpiarAyudaGlosario(elemento) {
+        if (elemento.querySelector('.text-muted')) {
+            elemento.innerHTML = "";
+        }
+    }
+</script>
 </body>
-                                                                                                                             </html>
+</html>
